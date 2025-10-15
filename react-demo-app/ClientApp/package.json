@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@azure/msal-browser": "^4.25.0",
+    "@azure/msal-react": "^3.0.20",
+    "@fluentui/react": "^8.124.1",
+    "@fluentui/react-components": "^9.72.2",
+    "axios": "^1.12.2",
     "bootstrap": "^5.2.3",
     "http-proxy-middleware": "^2.0.6",
     "jquery": "^3.6.4",

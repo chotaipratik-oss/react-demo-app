@@ -13,7 +13,9 @@ namespace react_demo_app.Controllers
     {
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
+
         {
+            System.Diagnostics.Debugger.Break();
             string tenantId = "a3b09b39-59ab-407c-ad97-dbecca421780";
             string clientId = "caac7aff-dcda-438d-95a5-c625e090e551";
             string clientSecret = "fQK8Q~bEtER9DCEE0edCCZIfvpPYaOaeLb3DfaI3";
@@ -33,7 +35,15 @@ namespace react_demo_app.Controllers
             var response = await httpClient.GetAsync("https://graph.microsoft.com/v1.0/users");
             var content = await response.Content.ReadAsStringAsync();
 
-            return Content(content, "application/json");
+            // Deserialize to strongly-typed User list
+            var users = System.Text.Json.JsonSerializer.Deserialize<ODataUserResponse>(content)?.Value;
+            return Ok(users);
+        }
+        // Helper class for OData response
+        public class ODataUserResponse
+        {
+            public System.Collections.Generic.List<react_demo_app.Models.User> Value { get; set; }
         }
     }
 }
+
