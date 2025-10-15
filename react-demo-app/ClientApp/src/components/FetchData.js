@@ -8,6 +8,7 @@ import { PublicClientApplication } from '@azure/msal-browser';
 import axios from 'axios';
 import Login from './Login';
 
+//configurations for MSAL
 const tenantId = "a3b09b39-59ab-407c-ad97-dbecca421780";
 const clientId = "caac7aff-dcda-438d-95a5-c625e090e551";
 const clientSecret = "fQK8Q~bEtER9DCEE0edCCZIfvpPYaOaeLb3DfaI3";
@@ -17,7 +18,7 @@ export class FetchData extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       graphUsers: [],
       loadingGraph: true,
       accessToken: '',
@@ -37,12 +38,12 @@ export class FetchData extends Component {
     //grab access token on load
     this.getAccessToken();
 
-   // this.populateGraphUsers();
+    // this.populateGraphUsers();
   }
 
   static renderGraphUsersTable(users) {
     return (
-     <p></p>
+      <p></p>
     );
   }
 
@@ -69,7 +70,7 @@ export class FetchData extends Component {
                 <td style={{ border: '1px solid #ddd', padding: 8 }}>{team.id}</td>
                 <td style={{ border: '1px solid #ddd', padding: 8 }}>{team.displayName}</td>
                 <td style={{ border: '1px solid #ddd', padding: 8 }}>
-                  {members.length} 
+                  {members.length}
                   {members.length > 0 && (
                     <ul style={{ margin: 0, paddingLeft: 16 }}>
                       {members.map(m => <li key={m.id}>{m.displayName}</li>)}
@@ -100,21 +101,21 @@ export class FetchData extends Component {
     return (
       <div>
         <Login />
-        <p style={{display:"none"}}>
-        <h1 id="graphUsersLabel">GRAPH users</h1>
-        {graphContents}
-        <PrimaryButton onClick={() => this.getAccessToken()} disabled={this.state.loadingToken}>
-          {this.state.loadingToken ? 'Loading...' : 'Get Access Token'}
-        </PrimaryButton>
-        {this.state.accessToken && (
-          <div>
-            <strong>Access Token:</strong>
-            <pre style={{wordBreak: 'break-all'}}>{this.state.accessToken}</pre>
-            <button onClick={() => this.getMsGraphUsers()} disabled={this.state.loadingMsGraph || !this.state.accessToken}>
-              {this.state.loadingMsGraph ? 'Loading Users...' : 'Get Users from Graph API'}
-            </button>
-          </div>
-        )}
+        <p style={{ display: "none" }}>
+          <h1 id="graphUsersLabel">GRAPH users</h1>
+          {graphContents}
+          <PrimaryButton onClick={() => this.getAccessToken()} disabled={this.state.loadingToken}>
+            {this.state.loadingToken ? 'Loading...' : 'Get Access Token'}
+          </PrimaryButton>
+          {this.state.accessToken && (
+            <div>
+              <strong>Access Token:</strong>
+              <pre style={{ wordBreak: 'break-all' }}>{this.state.accessToken}</pre>
+              <button onClick={() => this.getMsGraphUsers()} disabled={this.state.loadingMsGraph || !this.state.accessToken}>
+                {this.state.loadingMsGraph ? 'Loading Users...' : 'Get Users from Graph API'}
+              </button>
+            </div>
+          )}
         </p>
         {this.state.msGraphUsers.length > 0 && (
           <div>
@@ -257,11 +258,11 @@ export class FetchData extends Component {
 
   async getAccessToken() {
     this.setState({ loadingToken: true, accessToken: '' });
-   
+
     try {
       const response = await fetch(`/graphtoken/token?clientId=${encodeURIComponent(clientId)}&clientSecret=${encodeURIComponent(clientSecret)}&tenantId=${encodeURIComponent(tenantId)}`);
       const result = await response.json();
-      this.setState({ accessToken: result.accessToken || '', loadingToken: false },()=>this.getMsGraphUsers());
+      this.setState({ accessToken: result.accessToken || '', loadingToken: false }, () => this.getMsGraphUsers());
     } catch (error) {
       this.setState({ accessToken: 'Error fetching token', loadingToken: false });
     }
