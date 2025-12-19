@@ -137,7 +137,8 @@
 				"webRoot": "${workspaceFolder}/react-demo-app/ClientApp/src",
 				"sourceMapPathOverrides": {
 					"webpack:///src/*": "${webRoot}/*"
-				}
+				},
+				"note": "This debugs the React dev server at port 44448, which proxies to the ASP.NET Core backend"
 			}
 		],
 		"compounds": [
