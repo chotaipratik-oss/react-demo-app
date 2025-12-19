@@ -1,0 +1,15 @@
+{
+	"recommendations": [
+		"ms-dotnettools.csharp",
+		"ms-dotnettools.csdevkit",
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"dsznajder.es7-react-js-snippets",
+		"formulahendry.auto-rename-tag",
+		"christian-kohler.path-intellisense",
+		"eamodio.gitlens",
+		"ms-vscode.vscode-typescript-next",
+		"visualstudioexptteam.vscodeintellicode",
+		"Orta.vscode-jest"
+	]
+}

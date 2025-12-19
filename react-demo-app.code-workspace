@@ -1,0 +1,291 @@
+{
+	"folders": [
+		{
+			"path": ".",
+			"name": "react-demo-app (Root)"
+		},
+		{
+			"path": "react-demo-app/ClientApp",
+			"name": "ClientApp (React)"
+		}
+	],
+	"settings": {
+		// Editor settings
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": "explicit"
+		},
+		"editor.tabSize": 2,
+		
+		// File associations
+		"files.associations": {
+			"*.csproj": "xml",
+			"*.sln": "xml"
+		},
+		
+		// Files to exclude from explorer
+		"files.exclude": {
+			"**/node_modules": true,
+			"**/bin": true,
+			"**/obj": true,
+			"**/.vs": true
+		},
+		
+		// JavaScript/TypeScript settings
+		"javascript.updateImportsOnFileMove.enabled": "always",
+		"typescript.updateImportsOnFileMove.enabled": "always",
+		"javascript.preferences.quoteStyle": "single",
+		"typescript.preferences.quoteStyle": "single",
+		
+		// ESLint settings
+		"eslint.workingDirectories": [
+			"react-demo-app/ClientApp"
+		],
+		"eslint.format.enable": true,
+		"eslint.lintTask.enable": true,
+		
+		// .NET settings
+		"omnisharp.enableRoslynAnalyzers": true,
+		"omnisharp.enableEditorConfigSupport": true,
+		"omnisharp.enableImportCompletion": true,
+		
+		// Search settings
+		"search.exclude": {
+			"**/node_modules": true,
+			"**/bin": true,
+			"**/obj": true,
+			"**/build": true,
+			"**/.vs": true
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			// .NET Development
+			"ms-dotnettools.csharp",
+			"ms-dotnettools.csdevkit",
+			
+			// React/JavaScript Development
+			"dbaeumer.vscode-eslint",
+			"esbenp.prettier-vscode",
+			"dsznajder.es7-react-js-snippets",
+			"formulahendry.auto-rename-tag",
+			"christian-kohler.path-intellisense",
+			
+			// General productivity
+			"eamodio.gitlens",
+			"ms-vscode.vscode-typescript-next",
+			"visualstudioexptteam.vscodeintellicode",
+			
+			// Testing
+			"Orta.vscode-jest"
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Launch ASP.NET Core (.NET 9.0)",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "build",
+				"program": "${workspaceFolder}/react-demo-app/bin/Debug/net9.0/react-demo-app.dll",
+				"args": [],
+				"cwd": "${workspaceFolder}/react-demo-app",
+				"stopAtEntry": false,
+				"serverReadyAction": {
+					"action": "openExternally",
+					"pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+				},
+				"env": {
+					"ASPNETCORE_ENVIRONMENT": "Development"
+				},
+				"sourceFileMap": {
+					"/Views": "${workspaceFolder}/react-demo-app/Views"
+				}
+			},
+			{
+				"name": "Launch ASP.NET Core with React DevServer",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "build-and-start-react",
+				"program": "${workspaceFolder}/react-demo-app/bin/Debug/net9.0/react-demo-app.dll",
+				"args": [],
+				"cwd": "${workspaceFolder}/react-demo-app",
+				"stopAtEntry": false,
+				"serverReadyAction": {
+					"action": "openExternally",
+					"pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+				},
+				"env": {
+					"ASPNETCORE_ENVIRONMENT": "Development"
+				},
+				"sourceFileMap": {
+					"/Views": "${workspaceFolder}/react-demo-app/Views"
+				}
+			},
+			{
+				"name": "Attach to .NET Process",
+				"type": "coreclr",
+				"request": "attach"
+			},
+			{
+				"name": "Debug React in Chrome",
+				"type": "chrome",
+				"request": "launch",
+				"url": "https://localhost:44448",
+				"webRoot": "${workspaceFolder}/react-demo-app/ClientApp/src",
+				"sourceMapPathOverrides": {
+					"webpack:///src/*": "${webRoot}/*"
+				},
+				"note": "This debugs the React dev server at port 44448, which proxies to the ASP.NET Core backend"
+			}
+		],
+		"compounds": [
+			{
+				"name": "Full Stack: .NET + React",
+				"configurations": [
+					"Launch ASP.NET Core with React DevServer",
+					"Debug React in Chrome"
+				],
+				"stopAll": true,
+				"presentation": {
+					"hidden": false,
+					"group": "Full Stack",
+					"order": 1
+				}
+			}
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "build",
+				"command": "dotnet",
+				"type": "process",
+				"args": [
+					"build",
+					"${workspaceFolder}/react-demo-app/react-demo-app.csproj",
+					"/property:GenerateFullPaths=true",
+					"/consoleloggerparameters:NoSummary"
+				],
+				"problemMatcher": "$msCompile",
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				}
+			},
+			{
+				"label": "publish",
+				"command": "dotnet",
+				"type": "process",
+				"args": [
+					"publish",
+					"${workspaceFolder}/react-demo-app/react-demo-app.csproj",
+					"/property:GenerateFullPaths=true",
+					"/consoleloggerparameters:NoSummary"
+				],
+				"problemMatcher": "$msCompile"
+			},
+			{
+				"label": "watch",
+				"command": "dotnet",
+				"type": "process",
+				"args": [
+					"watch",
+					"run",
+					"--project",
+					"${workspaceFolder}/react-demo-app/react-demo-app.csproj"
+				],
+				"problemMatcher": "$msCompile"
+			},
+			{
+				"label": "clean",
+				"command": "dotnet",
+				"type": "process",
+				"args": [
+					"clean",
+					"${workspaceFolder}/react-demo-app/react-demo-app.csproj",
+					"/property:GenerateFullPaths=true",
+					"/consoleloggerparameters:NoSummary"
+				],
+				"problemMatcher": "$msCompile"
+			},
+			{
+				"label": "restore",
+				"command": "dotnet",
+				"type": "process",
+				"args": [
+					"restore",
+					"${workspaceFolder}/react-demo-app/react-demo-app.csproj"
+				],
+				"problemMatcher": "$msCompile"
+			},
+			{
+				"label": "npm: install",
+				"type": "shell",
+				"command": "npm install",
+				"options": {
+					"cwd": "${workspaceFolder}/react-demo-app/ClientApp"
+				},
+				"problemMatcher": []
+			},
+			{
+				"label": "npm: start",
+				"type": "shell",
+				"command": "npm start",
+				"options": {
+					"cwd": "${workspaceFolder}/react-demo-app/ClientApp"
+				},
+				"isBackground": true,
+				"problemMatcher": {
+					"owner": "custom",
+					"pattern": {
+						"regexp": "^$"
+					},
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": "Compiling...",
+						"endsPattern": "(Compiled successfully|Failed to compile)"
+					}
+				}
+			},
+			{
+				"label": "npm: build",
+				"type": "shell",
+				"command": "npm run build",
+				"options": {
+					"cwd": "${workspaceFolder}/react-demo-app/ClientApp"
+				},
+				"problemMatcher": []
+			},
+			{
+				"label": "npm: test",
+				"type": "shell",
+				"command": "npm test",
+				"options": {
+					"cwd": "${workspaceFolder}/react-demo-app/ClientApp"
+				},
+				"problemMatcher": []
+			},
+			{
+				"label": "npm: lint",
+				"type": "shell",
+				"command": "npm run lint",
+				"options": {
+					"cwd": "${workspaceFolder}/react-demo-app/ClientApp"
+				},
+				"problemMatcher": ["$eslint-stylish"]
+			},
+			{
+				"label": "build-and-start-react",
+				"dependsOn": [
+					"build",
+					"npm: start"
+				],
+				"problemMatcher": []
+			}
+		]
+	}
+}
